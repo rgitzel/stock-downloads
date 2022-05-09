@@ -15,10 +15,13 @@ for line in "${LINES[@]}"; do
   price=${splits[1]}
   millis=${splits[2]}
 
-  # this is different on a mac, of course
-  date=$(date -ur $millis +"%m/%d/%Y")
+  # use this on a Mac
+  #date=$(date -ur $millis +"%m/%d/%Y")
+  # use this for Linux
+  date=$(date -d @$millis +"%m/%d/%Y")
 
-  echo "$symbol $price $date"
+
+  echo "$symbol, $price, $date"
 done
 
 
