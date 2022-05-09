@@ -3,13 +3,14 @@
 set -eu
 
 if [ "$#" -lt 2 ]; then
-    echo "Usage: $0 API_KEY SYMBOLS_COMMA_DELIMITED [OUTPUT_FILE]"
+    echo "Usage: $0 API_KEY SYMBOLS_COMMA_DELIMITED [OUTPUT_FILE] [DELAY_IN_SECONDS]"
     exit 1
 fi
 
 API_KEY="${1}"
 SYMBOLS_COMMA_DELIMITED="${2}"
 OUTPUT_FILE="${3:-/tmp/downloaded-stocks.txt}"
+DELAY_IN_SECONDS="${4:-}"
 
 SYMBOLS=($(echo "${SYMBOLS_COMMA_DELIMITED//,/$'\n'}"))
 
@@ -68,6 +69,11 @@ do
      | sed -e "s/SYMBOL_THAT_IS_DIFFICULT_TO_INTERPOLATE_HERE/${symbol}/g" \
      >> "${OUTPUT_FILE}"
   fi
+
+  if [[ ! -z "${DELAY_IN_SECONDS}" ]]; then
+    sleep "${DELAY_IN_SECONDS}"
+  fi
+
 done
 
 echo "done"
