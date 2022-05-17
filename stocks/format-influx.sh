@@ -2,6 +2,7 @@
 
 set -eu
 
+CURRENCY=${1:-CAD}
 INPUT_FILE="${2:-/tmp/downloaded-stocks.txt}"
 
 LINES=()
@@ -15,7 +16,7 @@ for line in "${LINES[@]}"; do
   price=${splits[1]}
   millis=${splits[2]}
 
-  echo "stock,symbol=$symbol price=$price $millis"
+  echo "price,symbol=$symbol,currency=${CURRENCY}  price=$price $millis"
 done
 
 
